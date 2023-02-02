@@ -14,7 +14,6 @@
 //! the acknowledgment number and window size to advertise back to the
 //! remote TCPSender.
 class TCPReceiver {
-    uint64_t _last_abs_seqno;
     WrappingInt32 _isn;
     bool _set_syn_flag;
 
@@ -29,8 +28,7 @@ class TCPReceiver {
     //!
     //! \param capacity the maximum number of bytes that the receiver will
     //!                 store in its buffers at any give time.
-    TCPReceiver(const size_t capacity)
-        : _last_abs_seqno(0), _isn(0), _set_syn_flag(false), _reassembler(capacity), _capacity(capacity) {}
+    TCPReceiver(const size_t capacity) : _isn(0), _set_syn_flag(false), _reassembler(capacity), _capacity(capacity) {}
 
     //! \name Accessors to provide feedback to the remote TCPSender
     //!@{

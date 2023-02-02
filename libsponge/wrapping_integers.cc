@@ -31,6 +31,8 @@ uint64_t unwrap(WrappingInt32 n, WrappingInt32 isn, uint64_t checkpoint) {
     // 获取 n 与 isn 之间的偏移量（mod）
     // 实际的 absolute seqno % INT32_RANGE == offset
     uint32_t offset = n - isn;
+    /// NOTE: 最大的坑点！如果 checkpoint 比 offset 大，那么就需要进行四舍五入
+    /// NOTE: 但是!!! 如果 checkpoint 比 offset 还小，那就只能向上入了，即此时的 offset 就是 abs seqno
     if (checkpoint > offset) {
         // 加上半个 INT32_RANGE 是为了四舍五入
         uint64_t real_checkpoint = (checkpoint - offset) + (INT32_RANGE >> 1);
